@@ -1,0 +1,23 @@
+import barrios.*
+import elementos.*
+
+test "El modelo de Barrios funciona correctamente" {
+
+	const hog1 = new Hogar(nivelDeMugre = 25, confort = 50)
+	const hog2 = new Hogar(nivelDeMugre = 35, confort = 60)
+	const hue1 = new Huerta(capacidadDeProduccion = 1500)
+	const mas1 = new Mascota(nivelDeSalud = 260)
+	const bar1 = new Barrio()
+	bar1.agregarVarios([hog1, hog2, hue1, mas1])
+	assert.equals(1, bar1.cantidadElementosNoBuenos())
+	assert.equals(3, bar1.cantidadElementosBuenos())
+	assert.that(bar1.esCopado())
+	
+	const hue2 = new Huerta(capacidadDeProduccion = 500)
+	const mas2 = new Mascota(nivelDeSalud = 210)
+	bar1.agregarVarios([hue2, mas2])
+	assert.equals(3, bar1.cantidadElementosNoBuenos())
+	assert.equals(3, bar1.cantidadElementosBuenos())
+	assert.notThat(bar1.esCopado())
+	
+}

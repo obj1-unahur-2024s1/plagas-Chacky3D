@@ -1,0 +1,65 @@
+import plagas.*
+import elementos.*
+
+test "El modelo de plagas funciona correctamente" {
+	
+	const hog1 = new Hogar(nivelDeMugre = 25, confort = 50)
+	const hog2 = new Hogar(nivelDeMugre = 35, confort = 60)
+	const hue1 = new Huerta(capacidadDeProduccion = 1500)
+	const mas1 = new Mascota(nivelDeSalud = 260)
+	
+	const cuc1 = new Cucarachas(pesoPromedio = 6, poblacion = 8)
+	const cuc2 = new Cucarachas(pesoPromedio = 10, poblacion = 10)
+	
+	assert.notThat(cuc1.transmiteEnfermedades())
+	assert.that(cuc2.transmiteEnfermedades())
+	
+	assert.equals(4, cuc1.nivelDeDanio())
+	assert.equals(5, cuc2.nivelDeDanio())
+	
+	cuc1.atacar(hog1)
+	assert.equals(8, cuc1.pesoPromedio())
+	assert.equals(29, hog1.nivelDeMugre())
+	assert.equals(8.8, cuc1.poblacion())
+	
+	cuc2.atacar(hog1)
+	assert.equals(12, cuc2.pesoPromedio())
+	assert.equals(34, hog1.nivelDeMugre())
+	assert.equals(11, cuc2.poblacion())
+	
+	const pul1 = new Pulgas(poblacion = 15)
+	
+	assert.that(pul1.transmiteEnfermedades())
+	assert.equals(30, pul1.nivelDeDanio())
+	
+	pul1.atacar(hog2)
+	assert.equals(65, hog2.nivelDeMugre())
+	assert.equals(16.5, pul1.poblacion())
+	
+	const gar1 = new Garrapatas(poblacion = 30)
+	
+	assert.that(gar1.transmiteEnfermedades())
+	assert.equals(60, gar1.nivelDeDanio())
+	
+	gar1.atacar(hue1)
+	assert.equals(1484, hue1.capacidadDeProduccion())
+	assert.equals(36, gar1.poblacion())
+	
+	const mos1 = new Mosquitos(poblacion = 12)
+	const mos2 = new Mosquitos(poblacion = 9)
+	
+	assert.that(mos1.transmiteEnfermedades())
+	assert.notThat(mos2.transmiteEnfermedades())
+	
+	assert.equals(12, mos1.nivelDeDanio())
+	assert.equals(9, mos2.nivelDeDanio())
+	
+	mos1.atacar(mas1)
+	assert.equals(248, mas1.nivelDeSalud())
+	assert.equals(13.2, mos1.poblacion())
+	
+	mos2.atacar(mas1)
+	assert.equals(248, mas1.nivelDeSalud())
+	assert.equals(9.9, mos2.poblacion())
+	
+}
